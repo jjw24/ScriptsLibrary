@@ -17,11 +17,23 @@
             <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
         <Label HorizontalAlignment="Center" Margin="80,22,15,0" VerticalAlignment="Top" Height="43" Width="405" FontSize="20" Content="{DynamicResource wox_plugin_ScriptsLibrary_plugin_set_tip}"/>
-        <TextBox x:Name="profileBox" HorizontalAlignment="Left" Height="26" Margin="90,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="147" RenderTransformOrigin="0.5,0.5"/>
         <Button x:Name="setButton" HorizontalAlignment="Center" Margin="392,220,36,0" VerticalAlignment="Center" Width="72" Height="28" FontSize="16" Click="OnApplyBTClick" Content="{DynamicResource wox_plugin_ScriptsLibrary_plugin_apply}"/>
-        <TextBox x:Name="regionBox" HorizontalAlignment="Left" Height="26" Margin="279,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="149"/>
-        <Label HorizontalAlignment="Left" Margin="91,82,0,0" VerticalAlignment="Top" Height="43" Width="145" FontSize="20" Content="{DynamicResource wox_plugin_ScriptsLibrary_plugin_label_profile}"/>
-        <Label HorizontalAlignment="Left" Margin="280,82,0,0" VerticalAlignment="Top" Height="43" Width="145" FontSize="20" Content="{DynamicResource wox_plugin_ScriptsLibrary_plugin_label_region}"/>
+        <ListView x:Name="lbxFiles" Grid.Row="0" AllowDrop="True"
+            Drop="lbxFolders_Drop"
+            DragEnter="lbxFolders_DragEnter" Margin="7,45,8,70">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="{DynamicResource wox_plugin_folder_folder_path}"  Width="180">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="btnAddFiles" Click="btnAddFiles_Click" Margin="271,246,129,24" Content="Add Files"/>
 
 
     </Grid>
