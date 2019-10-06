@@ -18,7 +18,14 @@ namespace Wox.Plugin.ScriptsLibrary.Commands
         {
             var newList = new List<Script>();
 
-            arrayList.ToList().ForEach(x => newList.Add(new Script { Path = x }));
+            var parametersList = new List<string>() { "DO SOME PARAM GET COLLECTION HERE" };
+
+            arrayList.ToList().ForEach(x => newList.Add(
+                                                        new Script
+                                                        {
+                                                            Path = x,
+                                                            Parameters = parametersList
+                                                        }));
 
             return newList;
         }
