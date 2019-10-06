@@ -12,7 +12,7 @@ namespace Wox.Plugin.ScriptsLibrary.Models
 
         public string FileName =>
            Path.Split(new[] { System.IO.Path.DirectorySeparatorChar }, StringSplitOptions.None)
-               .Last()
-           + " (" + System.IO.Path.GetDirectoryName(Path) + ")";
+               .Last();
+        //   + " (" + System.IO.Path.GetDirectoryName(Path) + ")";
     }
 }

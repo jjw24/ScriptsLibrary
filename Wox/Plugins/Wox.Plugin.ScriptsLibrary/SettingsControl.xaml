@@ -16,14 +16,20 @@
             <ColumnDefinition Width="0*"/>
             <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
-        <Label HorizontalAlignment="Center" Margin="80,22,15,0" VerticalAlignment="Top" Height="43" Width="405" FontSize="20" Content="{DynamicResource wox_plugin_ScriptsLibrary_plugin_set_tip}"/>
-        <Button x:Name="setButton" HorizontalAlignment="Center" Margin="392,220,36,0" VerticalAlignment="Center" Width="72" Height="28" FontSize="16" Click="OnApplyBTClick" Content="{DynamicResource wox_plugin_ScriptsLibrary_plugin_apply}"/>
+        <Label HorizontalAlignment="Center" Margin="80,22,15,0" VerticalAlignment="Top" Height="43" Width="405" FontSize="20" Content="Loaded Scripts"/>
         <ListView x:Name="lbxFiles" Grid.Row="0" AllowDrop="True"
             Drop="lbxFolders_Drop"
             DragEnter="lbxFolders_DragEnter" Margin="7,45,8,70">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="{DynamicResource wox_plugin_folder_folder_path}"  Width="180">
+                    <GridViewColumn Header="Name"  Width="180">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding FileName}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Path"  Width="180">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Path}"/>
@@ -34,6 +40,7 @@
             </ListView.View>
         </ListView>
         <Button x:Name="btnAddFiles" Click="btnAddFiles_Click" Margin="271,246,129,24" Content="Add Files"/>
+        <Button x:Name="btnAddFolders" Click="btnAddFolders_Click" Margin="148,246,252,24" Content="Add Folders"/>
 
 
     </Grid>

@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using Microsoft.Win32;
 using Ookii.Dialogs.Wpf;
 using Wox.Plugin.ScriptsLibrary.Models;
+using Wox.Plugin.ScriptsLibrary.Commands;
 
 namespace Wox.Plugin.ScriptsLibrary
 {   
@@ -29,34 +30,40 @@ namespace Wox.Plugin.ScriptsLibrary
             InitializeComponent();
             _settings = settings;
             _woxAPI = woxAPI;
-            //profileBox.Text = _settings.Profile;
-            //regionBox.Text = _settings.Region;
+            lbxFiles.ItemsSource = _settings.ScriptList;
         }
-
-        private void OnApplyBTClick(object sender, RoutedEventArgs e)
-        {
-            //_settings.Profile = profileBox.Text;
-            //_settings.Region = regionBox.Text;
-        }
-
 
         private void btnAddFiles_Click(object sender, RoutedEventArgs e)
         {
             var fileBrowserDialog = new OpenFileDialog();
             fileBrowserDialog.Multiselect = true;
+
             if (fileBrowserDialog.ShowDialog() == true)
             {
-                var newFolder = new FileLink
+                if (_settings.ScriptList == null)
                 {
-                    Path = fileBrowserDialog.FileName
-                };
+                    _settings.ScriptList = new List<Script>();
+                }                
 
-                if (_settings.FolderLinks == null)
-                {
-                    _settings.FolderLinks = new List<FileLink>();
-                }
+                fileBrowserDialog.FileNames
+                    .LoadFileLinkFromArray()
+                    .ForEach(x => _settings.ScriptList.Add(x));
+            }
 
-                _settings.FolderLinks.Add(newFolder);
+            lbxFiles.Items.Refresh();
+        }
+        
+        public void btnAddFolders_Click(object sender, RoutedEventArgs e)
+        {
+            var folderBrowserDialog = new VistaFolderBrowserDialog();
+
+            if (folderBrowserDialog.ShowDialog() == true)
+            {
+                var selectedFolderPath = folderBrowserDialog.SelectedPath;
+
+                Directory.GetFiles(selectedFolderPath)
+                    .LoadFileLinkFromArray()
+                    .ForEach(x => _settings.ScriptList.Add(x));
             }
 
             lbxFiles.Items.Refresh();
@@ -68,21 +75,21 @@ namespace Wox.Plugin.ScriptsLibrary
 
             if (files != null && files.Count() > 0)
             {
-                if (_settings.FolderLinks == null)
+                if (_settings.ScriptList == null)
                 {
-                    _settings.FolderLinks = new List<FileLink>();
+                    _settings.ScriptList = new List<Script>();
                 }
 
                 foreach (string s in files)
                 {
                     if (Directory.Exists(s))
                     {
-                        var newFolder = new FileLink
+                        var script = new Script
                         {
                             Path = s
                         };
 
-                        _settings.FolderLinks.Add(newFolder);
+                        _settings.ScriptList.Add(script);
                     }
 
                     lbxFiles.Items.Refresh();
@@ -100,6 +107,6 @@ namespace Wox.Plugin.ScriptsLibrary
             {
                 e.Effects = DragDropEffects.None;
             }
-        }
+        }        
     }
 }

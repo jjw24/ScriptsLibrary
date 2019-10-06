@@ -6,10 +6,7 @@ namespace Wox.Plugin.ScriptsLibrary
 {
     public class Settings
     {
-        public string Profile { get; set; }
-        public string Region { get; set; }
-
         [JsonProperty]
-        public List<FileLink> FolderLinks { get; set; } = new List<FileLink>();
+        public List<Script> ScriptList { get; set; } = new List<Script>();
     }
 }

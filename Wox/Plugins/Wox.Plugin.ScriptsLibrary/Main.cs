@@ -1,15 +1,21 @@
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Windows.Controls;
 using Wox.Infrastructure.Storage;
 using Wox.Plugin.ScriptsLibrary.Commands;
 
 namespace Wox.Plugin.ScriptsLibrary
 {
-    public class Main : ISettingProvider,IPlugin, IPluginI18n, ISavable
+    public class Main : ISettingProvider,IPlugin, ISavable
     {
         private PluginInitContext context;
         private readonly Settings _settings;
         private readonly PluginJsonStorage<Settings> _storage;
+                
+        public static string IcoImagePath => ImagesDirectory + "\\ScriptsLibrary.png";
+        public static string ImagesDirectory;
+        public static string Images = "Images";
 
         public Main()
         {
@@ -24,19 +30,23 @@ namespace Wox.Plugin.ScriptsLibrary
 
         public List<Result> Query(Query query)
         {
-            if (string.IsNullOrEmpty(_settings.Profile) || string.IsNullOrEmpty(_settings.Region))
-                return new List<Result>
-                        {
-                            new Result
-                            {
-                                Title = "Please specify a profile and region by going to Settings menu",
-                                SubTitle = "The Wox icon can be found in the Taskbar, right click on the icon to go to settings",
-                                IcoPath = "Images/ScriptsLibrary.png",
-                                Score = 8
-                            }
-                        };
+            var matchedScripts = _settings.ScriptList.Where(x => x.FileName == query.Search).Select(x => x).ToList();
 
-            return _settings.Profile.LoadList(_settings.Region);
+            if (matchedScripts.Count == 0)
+                return new List<Result>();
+
+            return matchedScripts.Select(c => new Result()
+            {
+                Title = c.FileName,
+                SubTitle = c.Path,
+                IcoPath = IcoImagePath,
+                Score = 5,
+                Action = (e) =>
+                {
+                    CMDScript.RunCMDFromFileLink(c.Path);
+                    return true;
+                }
+            }).ToList();
         }
 
         public Control CreateSettingPanel()
@@ -47,16 +57,7 @@ namespace Wox.Plugin.ScriptsLibrary
         public void Init(PluginInitContext context)
         {
             this.context = context;
-        }
-
-        public string GetTranslatedPluginTitle()
-        {
-            return context.API.GetTranslation("wox_plugin_ScriptsLibrary_plugin_name");
-        }
-
-        public string GetTranslatedPluginDescription()
-        {
-            return context.API.GetTranslation("wox_plugin_ScriptsLibrary_plugin_description");
-        }
+            ImagesDirectory = Path.Combine(context.CurrentPluginMetadata.PluginDirectory, Images);
+        }       
     }
 }

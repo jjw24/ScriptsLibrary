@@ -35,5 +35,13 @@ namespace Wox.Plugin.ScriptsLibrary.Commands
 
             return stringFromOutput;
         }
+
+        internal static void SetupEnvironment(string filePath)
+        {
+            var fileParams = string.Empty;
+            var fileParams2 = string.Empty;
+            var workingDirectory = ".\\Plugins\\Wox.Plugin.ScriptsLibrary\\Commands";
+            var command = $"PowerShell -ExecutionPolicy Bypass -File \"{filePath}\"" + " " + fileParams + " " + fileParams2;
+        }
     }
 }
