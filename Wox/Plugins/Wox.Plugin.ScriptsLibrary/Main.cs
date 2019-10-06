@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Controls;
+using Wox.Infrastructure;
 using Wox.Infrastructure.Storage;
 using Wox.Plugin.ScriptsLibrary.Commands;
 
@@ -30,7 +31,11 @@ namespace Wox.Plugin.ScriptsLibrary
 
         public List<Result> Query(Query query)
         {
-            var matchedScripts = _settings.ScriptList.Where(x => x.FileName == query.Search).Select(x => x).ToList();
+            var matchedScripts = _settings.ScriptList
+                                    .Where(x => StringMatcher.FuzzySearch(query.Search, x.FileName)
+                                                             .IsSearchPrecisionScoreMet())
+                                    .Select(x => x)
+                                    .ToList();
 
             if (matchedScripts.Count == 0)
                 return new List<Result>();
