@@ -5,7 +5,7 @@ using System.Linq;
 namespace Wox.Plugin.ScriptsLibrary.Models
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public class FileLink
+    public class Script
     {
         [JsonProperty]
         public string Path { get; set; }
