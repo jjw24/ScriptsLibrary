@@ -24,5 +24,25 @@ namespace Wox.Plugin.ScriptsLibrary.Views
         {
             InitializeComponent();
         }
+
+        private void btnAddFiles_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnAddFolders_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void lbxFolders_Drop(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void lbxFolders_DragEnter(object sender, DragEventArgs e)
+        {
+
+        }
     }
 }
