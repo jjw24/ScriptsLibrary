@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using Wox.Plugin.ScriptsLibrary.Commands;
 
-namespace Tests
+namespace ScriptsLibrary.Test
 {
     [TestFixture]
     public class ParameterTests
