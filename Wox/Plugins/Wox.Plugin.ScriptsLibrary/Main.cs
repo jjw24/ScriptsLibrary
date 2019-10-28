@@ -1,27 +1,32 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using Wox.Infrastructure;
 using Wox.Infrastructure.Storage;
 using Wox.Plugin.ScriptsLibrary.Commands;
+using Wox.Plugin.ScriptsLibrary.Views;
 
 namespace Wox.Plugin.ScriptsLibrary
 {
     public class Main : ISettingProvider,IPlugin, ISavable
     {
         private PluginInitContext context;
-        private readonly Settings _settings;
+        internal static Settings _settings;
         private readonly PluginJsonStorage<Settings> _storage;
                 
-        public static string IcoImagePath => ImagesDirectory + "\\ScriptsLibrary.png";
-        public static string ImagesDirectory;
-        public static string Images = "Images";
+        internal static string IcoImagePath => ImagesDirectory + "\\ScriptsLibrary.png";
+        internal static string IcoRunImagePath => ImagesDirectory + "\\Run.png";
+        internal static string ImagesDirectory;
+        internal static string Images = "Images";
+        internal static MainWindow _mainWindow { get; set; }
 
         public Main()
         {
             _storage = new PluginJsonStorage<Settings>();
             _settings = _storage.Load();
+            _mainWindow = new MainWindow();
         }
 
         public void Save()
@@ -31,28 +36,16 @@ namespace Wox.Plugin.ScriptsLibrary
 
         public List<Result> Query(Query query)
         {
-            var matchedScripts = _settings.ScriptList
-                                    .Where(x => StringMatcher.FuzzySearch(query.Search, x.FileName)
-                                                             .IsSearchPrecisionScoreMet())
-                                    .Select(x => x)
-                                    .ToList();
 
-            if (matchedScripts.Count == 0)
-                return new List<Result>();
+            var resultsToReturn = new List<Result>();
 
-            return matchedScripts.Select(c => new Result()
-            {
-                Title = c.FileName,
-                SubTitle = c.Path,
-                IcoPath = IcoImagePath,
-                Score = 5,
-                Action = (e) =>
-                {
-                    CMDScript.RunCMDFromFileLink(c.Path);
-                    return true;
-                }
-            }).ToList();
+            Library.GetAvailableCommands().ForEach(x => resultsToReturn.Add(x));
+            Library.GetMatchingScripts(query.Search).ForEach(x => resultsToReturn.Add(x));
+
+            return resultsToReturn;
         }
+
+
 
         public Control CreateSettingPanel()
         {
