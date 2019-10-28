@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using Wox.Infrastructure;
@@ -55,7 +55,7 @@ namespace Wox.Plugin.ScriptsLibrary.Commands
 
             return matchedScripts.Select(c => new Result()
             {
-                Title = c.FileName,
+                Title = c.FileName + (string.IsNullOrEmpty(c.Parameters) ? "" : "Parameters: " + c.Parameters),
                 SubTitle = c.Path,
                 IcoPath = Main.IcoRunImagePath,
                 Score = 5,
