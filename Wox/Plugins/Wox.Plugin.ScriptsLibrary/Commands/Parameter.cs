@@ -17,7 +17,7 @@ namespace Wox.Plugin.ScriptsLibrary.Commands
                 return true;
 
             // Empty parameter string is allowed as a default value or parameter not specified.
-            if (!parameters.Contains(Seperator) && parameters == "")
+            if (!parameters.Contains(Seperator) && parameters != string.Empty)
                 return false;
 
             if (parameters[parameters.Length - 1] == Seperator)
