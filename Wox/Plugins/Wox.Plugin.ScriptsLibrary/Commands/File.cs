@@ -22,7 +22,7 @@ namespace Wox.Plugin.ScriptsLibrary.Commands
                                                         new Script
                                                         {
                                                             Path = x,
-                                                            Parameters = "-Username;-ComputerName"
+                                                            Parameters = "Example for now: Username;ComputerName"
                                                         }));
 
             return newList;
