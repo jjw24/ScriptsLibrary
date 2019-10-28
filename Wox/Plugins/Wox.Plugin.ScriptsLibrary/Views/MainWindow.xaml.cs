@@ -36,6 +36,8 @@ namespace Wox.Plugin.ScriptsLibrary.Views
 
                 fileBrowserDialog.FileNames
                     .LoadFileLinkFromArray()
+                    .Where(t1 => !Main._settings.ScriptList.Any(x => t1.Path == x.Path))
+                    .ToList()
                     .ForEach(x => Main._settings.ScriptList.Add(x));
             }
 
