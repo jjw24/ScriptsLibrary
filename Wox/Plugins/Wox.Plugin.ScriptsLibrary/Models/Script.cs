@@ -18,6 +18,6 @@ namespace Wox.Plugin.ScriptsLibrary.Models
         //   + " (" + System.IO.Path.GetDirectoryName(Path) + ")";
 
         [JsonProperty]
-        public List<string> Parameters { get; set; }
+        public string Parameters { get; set; }
     }
 }
