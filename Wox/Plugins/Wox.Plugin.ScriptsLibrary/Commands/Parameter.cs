@@ -10,6 +10,9 @@ namespace Wox.Plugin.ScriptsLibrary.Commands
 
         public static int GetParametersFromFileCount(this string parameters)
         {
+            if (string.IsNullOrEmpty(parameters))
+                return 0;
+
             if (!parameters.Contains(Main.ParameterSeperator))
                 return 0;
 
@@ -34,6 +37,9 @@ namespace Wox.Plugin.ScriptsLibrary.Commands
 
         public static string GetParametersFromQuery(this string query)
         {
+            if (!query.Contains(" " + Main.ParameterIndicator + " "))
+                return string.Empty;
+
             var parameters = query.Split(new string[] { Main.ParameterIndicator }, StringSplitOptions.None)[1];
 
             var parameterString = parameters.Replace(Main.ParameterIndicator,"").Trim();
