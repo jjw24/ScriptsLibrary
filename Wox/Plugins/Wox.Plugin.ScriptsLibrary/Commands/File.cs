@@ -21,8 +21,7 @@ namespace Wox.Plugin.ScriptsLibrary.Commands
             arrayList.ToList().ForEach(x => newList.Add(
                                                         new Script
                                                         {
-                                                            Path = x,
-                                                            Parameters = "Example for now: Username;ComputerName"
+                                                            Path = x
                                                         }));
 
             return newList;

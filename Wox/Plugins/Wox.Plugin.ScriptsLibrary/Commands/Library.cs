@@ -63,8 +63,8 @@ namespace Wox.Plugin.ScriptsLibrary.Commands
                     {
                         return new Result()
                         {
-                            Title = c.FileName + (string.IsNullOrEmpty(c.Parameters) ? "" : " Parameters: " + c.Parameters),
-                            SubTitle = c.Path,
+                            Title = c.FileName + $" ({c.Path})",
+                            SubTitle = string.IsNullOrEmpty(c.Parameters) ? "" : "Parameters: " + c.Parameters,
                             IcoPath = Main.IcoRunImagePath,
                             Score = 5
                         };
