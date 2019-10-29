@@ -54,8 +54,6 @@ namespace Wox.Plugin.ScriptsLibrary.Commands
             if (matchedScripts.Count == 0)
                 return new List<Result>();
 
-            
-
             return matchedScripts
                 .Select(c => 
                 {
@@ -79,8 +77,7 @@ namespace Wox.Plugin.ScriptsLibrary.Commands
                         Score = 5,
                         Action = (e) =>
                         {
-                            var blah = querySearchString;
-                            CMDScript.RunCMDFromFileLink(c.Path, querySearchString.GetParametersFromQuery());
+                            c.Path.RunFileWithParameters(querySearchString.GetParametersFromQuery());
                             return true;
                         }
                     };
