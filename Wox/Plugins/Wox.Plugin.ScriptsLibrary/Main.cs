@@ -22,6 +22,9 @@ namespace Wox.Plugin.ScriptsLibrary
         internal static string Images = "Images";
         internal static MainWindow _mainWindow { get; set; }
 
+        internal static readonly char ParameterSeperator = ';';
+        internal static readonly string ParameterIndicator = "-p";
+
         public Main()
         {
             _storage = new PluginJsonStorage<Settings>();
@@ -39,8 +42,16 @@ namespace Wox.Plugin.ScriptsLibrary
 
             var resultsToReturn = new List<Result>();
 
-            Library.GetAvailableCommands().ForEach(x => resultsToReturn.Add(x));
+            Library.GetAvailableCommands()
+                .Where(x => StringMatcher.FuzzySearch(query.Search, x.Title).IsSearchPrecisionScoreMet())
+                .Select(x => x)
+                .ToList()
+                .ForEach(x => resultsToReturn.Add(x));
+
             Library.GetMatchingScripts(query.Search).ForEach(x => resultsToReturn.Add(x));
+
+            if (!resultsToReturn.Any())
+                return Library.GetAvailableCommands();
 
             return resultsToReturn;
         }

@@ -1,7 +1,8 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using Wox.Infrastructure;
+using Wox.Plugin.ScriptsLibrary.Views;
 
 namespace Wox.Plugin.ScriptsLibrary.Commands
 {
@@ -20,7 +21,7 @@ namespace Wox.Plugin.ScriptsLibrary.Commands
                                 Score = 5,
                                 Action = (e) =>
                                 {
-                                    Main._mainWindow.Visibility = Visibility.Visible;
+                                    new MainWindow().Visibility = Visibility.Visible;
                                     return true;
                                 }
                             }
@@ -45,7 +46,7 @@ namespace Wox.Plugin.ScriptsLibrary.Commands
         public static List<Result> GetMatchingScripts(string querySearchString)
         {
             var matchedScripts = Main._settings.ScriptList
-                                    .Where(x => StringMatcher.FuzzySearch(querySearchString, x.FileName)
+                                    .Where(x => StringMatcher.FuzzySearch(querySearchString.SeperateQueryFromParameters(), x.FileName)
                                                              .IsSearchPrecisionScoreMet())
                                     .Select(x => x)
                                     .ToList();
@@ -53,18 +54,39 @@ namespace Wox.Plugin.ScriptsLibrary.Commands
             if (matchedScripts.Count == 0)
                 return new List<Result>();
 
-            return matchedScripts.Select(c => new Result()
-            {
-                Title = c.FileName + (string.IsNullOrEmpty(c.Parameters) ? "" : "Parameters: " + c.Parameters),
-                SubTitle = c.Path,
-                IcoPath = Main.IcoRunImagePath,
-                Score = 5,
-                Action = (e) =>
+            
+
+            return matchedScripts
+                .Select(c => 
                 {
-                    CMDScript.RunCMDFromFileLink(c.Path);
-                    return true;
+                    if (!querySearchString.IsQueryParametersMatchingFileParameters(c.Parameters))
+                    {
+                        return new Result()
+                        {
+                            Title = c.FileName + (string.IsNullOrEmpty(c.Parameters) ? "" : " Parameters: " + c.Parameters),
+                            SubTitle = c.Path,
+                            IcoPath = Main.IcoRunImagePath,
+                            Score = 5
+                        };
+                    }
+
+                    return new Result()
+                    {
+                        Title = c.FileName 
+                                    + (string.IsNullOrEmpty(c.Parameters) ? "" : " " + querySearchString.GetParametersFromQuery()),
+                        SubTitle = c.Path,
+                        IcoPath = Main.IcoRunImagePath,
+                        Score = 5,
+                        Action = (e) =>
+                        {
+                            var blah = querySearchString;
+                            CMDScript.RunCMDFromFileLink(c.Path, querySearchString.GetParametersFromQuery());
+                            return true;
+                        }
+                    };
                 }
-            }).ToList();
+            
+            ).ToList();
         }
     }
 }

@@ -1,4 +1,4 @@
-<Window x:Class="Wox.Plugin.ScriptsLibrary.Views.MainWindow"
+﻿<Window x:Class="Wox.Plugin.ScriptsLibrary.Views.MainWindow"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -18,7 +18,7 @@
             <ColumnDefinition Width="0*"/>
             <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
-        <Label HorizontalAlignment="Center" Margin="230,22,413,0" VerticalAlignment="Top" Height="43" Width="157" FontSize="20" Content="Manage Library"/>
+        <Label HorizontalAlignment="Center" Margin="230,22,413,0" VerticalAlignment="Top" Height="43" Width="157" FontSize="20" Content="The Library"/>
         <ListView x:Name="lbxFiles" Grid.Row="0" AllowDrop="True"
             Drop="lbxFolders_Drop"
             DragEnter="lbxFolders_DragEnter" Margin="7,70,337,70">

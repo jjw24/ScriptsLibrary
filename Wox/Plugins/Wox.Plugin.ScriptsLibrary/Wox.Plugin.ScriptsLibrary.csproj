@@ -66,6 +66,7 @@
     <Compile Include="Commands\Library.cs" />
     <Compile Include="Commands\Parameter.cs" />
     <Compile Include="Commands\PsScript.cs" />
+    <Compile Include="Commands\Query.cs" />
     <Compile Include="Models\Script.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Main.cs" />

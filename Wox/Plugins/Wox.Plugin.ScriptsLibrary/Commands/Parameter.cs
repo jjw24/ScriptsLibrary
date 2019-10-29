@@ -1,13 +1,58 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Wox.Plugin.ScriptsLibrary.Commands
 {
     public static class Parameter
     {
-        private static readonly char Seperator = ';';
+        public static List<string> GetParametersFromFile(this string parameters) => parameters.Split(Main.ParameterSeperator).ToList();
 
-        public static List<string> SplitString(string parameters) => parameters.Split(Seperator).ToList();
+        public static int GetParametersFromFileCount(this string parameters)
+        {
+            if (!parameters.Contains(Main.ParameterSeperator))
+                return 0;
+
+            return parameters
+                    .Split(Main.ParameterSeperator)
+                    .Where(x => !string.IsNullOrEmpty(x))
+                    .Count();
+        }
+
+        public static int GetParametersFromQueryCount(this string query)
+        {
+            if (!query.Contains(" " + Main.ParameterIndicator + " "))
+                return 0;
+
+            var parameters = query.Split(new string[] { Main.ParameterIndicator }, StringSplitOptions.None)[1].Trim();
+
+            return parameters
+                .Split(Main.ParameterSeperator)
+                .Where(x => !string.IsNullOrEmpty(x))
+                .Count();
+        }
+
+        public static string GetParametersFromQuery(this string query)
+        {
+            var parameters = query.Split(new string[] { Main.ParameterIndicator }, StringSplitOptions.None)[1];
+
+            var parameterString = parameters.Replace(Main.ParameterIndicator,"").Trim();
+
+            return parameterString.Replace(Main.ParameterSeperator, ' ');
+        }
+
+        public static bool IsRequiredParametersEntered(int queryParameters, int fileParameters)
+        {
+            if (queryParameters == fileParameters)
+                return true;
+
+            return false;
+        }
+
+        public static bool IsQueryParametersMatchingFileParameters(this string query, string fileParameters)
+        {
+            return GetParametersFromQueryCount(query) == GetParametersFromFileCount(fileParameters);
+        }
 
         public static bool ValidateString(string parameters)
         {
@@ -17,13 +62,13 @@ namespace Wox.Plugin.ScriptsLibrary.Commands
                 return true;
 
             // Empty parameter string is allowed as a default value or parameter not specified.
-            if (!parameters.Contains(Seperator) && parameters != string.Empty)
+            if (!parameters.Contains(Main.ParameterSeperator) && parameters != string.Empty)
                 return false;
 
-            if (parameters[parameters.Length - 1] == Seperator)
+            if (parameters[parameters.Length - 1] == Main.ParameterSeperator)
                 return false;
 
-            if (parameters[0] == Seperator)
+            if (parameters[0] == Main.ParameterSeperator)
                 return false;
 
             return result;

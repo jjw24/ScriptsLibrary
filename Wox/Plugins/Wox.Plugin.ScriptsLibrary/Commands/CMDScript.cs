@@ -1,13 +1,12 @@
 ﻿using System.Diagnostics;
-using Wox.Plugin.ScriptsLibrary.Models;
 
 namespace Wox.Plugin.ScriptsLibrary.Commands
 {
-    internal static class CMDScript
+    public static class CMDScript
     {
-        internal static void RunCMDFromFileLink(string scriptPath)
+        public static void RunCMDFromFileLink(string scriptPath, string parameters)
         {
-            Process.Start(scriptPath);
+            Process.Start(scriptPath, parameters);
         }
     }
 }
