@@ -32,10 +32,10 @@ namespace Wox.Plugin.ScriptsLibrary.Commands
             switch(GetScriptType(scriptPath))
             {
                 case ScriptType.Cmd:
-                    CMDScript.RunCMDFromFileLink(scriptPath, parameters);
+                    CMDScript.RunCMDWithParameters(scriptPath, parameters);
                     break;
                 case ScriptType.Powershell:
-                    PsScript.Run(scriptPath, parameters);
+                    PsScript.RunPsWithParameters(scriptPath, parameters);
                     break;
                 default:
                     break;

@@ -1,4 +1,5 @@
-﻿using System.Management.Automation;
+﻿using System.Diagnostics;
+using System.Management.Automation;
 using System.Threading;
 
 namespace Wox.Plugin.ScriptsLibrary.Commands
@@ -34,6 +35,19 @@ namespace Wox.Plugin.ScriptsLibrary.Commands
             }
 
             return stringFromOutput;
+        }
+
+        internal static void RunPsWithParameters(string scriptPath, string parameters)
+        {
+            var arguments = $"-ExecutionPolicy Bypass \"{scriptPath} {parameters} ; Read-Host -Prompt \\\"Press Enter to exit\\\"\"";
+            
+            var info = new ProcessStartInfo
+            {
+                FileName = "Powershell.exe",
+                Arguments = arguments,
+            };
+
+            Process.Start(info);
         }
 
         internal static void SetupEnvironment(string filePath)
