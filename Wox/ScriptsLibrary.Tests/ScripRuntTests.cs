@@ -1,18 +1,21 @@
 ﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Wox.Plugin.ScriptsLibrary.Commands;
 
 namespace ScriptsLibrary.Tests
 {
     [TestFixture]
-    public class CMDScriptTests
+    public class ScripRuntTests
     {
         [TestCase]
-        public void test()
+        public void RunCMDScriptTest()
         {
             CMDScript.RunCMDWithParameters("C:\\Users\\JJW\\Desktop\\Hello.bat", "JWU Blah");
+        }
+
+        [TestCase]
+        public void RunPsScriptTest()
+        {
+            File.RunFileWithParameters("C:\\Users\\JJW\\Desktop\\hello PS.ps1", "JWU Blah");
         }
     }
 }
