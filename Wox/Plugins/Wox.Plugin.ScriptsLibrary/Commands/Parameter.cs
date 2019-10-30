@@ -55,7 +55,7 @@ namespace Wox.Plugin.ScriptsLibrary.Commands
             return false;
         }
 
-        public static bool IsQueryParametersMatchingFileParameters(this string query, string fileParameters)
+        public static bool QueryParametersMatchFileParameters(this string query, string fileParameters)
         {
             return GetParametersFromQueryCount(query) == GetParametersFromFileCount(fileParameters);
         }

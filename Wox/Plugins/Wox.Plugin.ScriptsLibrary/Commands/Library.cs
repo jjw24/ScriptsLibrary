@@ -57,7 +57,7 @@ namespace Wox.Plugin.ScriptsLibrary.Commands
             return matchedScripts
                 .Select(c => 
                 {
-                    if (!querySearchString.IsQueryParametersMatchingFileParameters(c.Parameters))
+                    if (!querySearchString.QueryParametersMatchFileParameters(c.Parameters))
                     {
                         return new Result()
                         {
