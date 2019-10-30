@@ -21,7 +21,8 @@ namespace Wox.Plugin.ScriptsLibrary.Commands
             arrayList.ToList().ForEach(x => newList.Add(
                                                         new Script
                                                         {
-                                                            Path = x
+                                                            Path = x,
+                                                            UniqueIdentifier = x
                                                         }));
 
             return newList;

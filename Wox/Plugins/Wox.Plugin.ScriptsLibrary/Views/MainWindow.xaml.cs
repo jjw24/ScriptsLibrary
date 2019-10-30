@@ -36,7 +36,7 @@ namespace Wox.Plugin.ScriptsLibrary.Views
 
                 fileBrowserDialog.FileNames
                     .LoadFileLinkFromArray()
-                    .Where(t1 => !Main._settings.ScriptList.Any(x => t1.Path == x.Path))
+                    .Where(t1 => !Main._settings.ScriptList.Any(x => t1.UniqueIdentifier == x.UniqueIdentifier))
                     .ToList()
                     .ForEach(x => Main._settings.ScriptList.Add(x));
             }
@@ -98,6 +98,16 @@ namespace Wox.Plugin.ScriptsLibrary.Views
             {
                 e.Effects = DragDropEffects.None;
             }
+        }
+
+        private void Row_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (lbxFiles.SelectedItems.Count != 1)
+                return;
+
+            var selectedScript = lbxFiles.SelectedItem as Script;
+
+            txbDescription.Text = selectedScript.Description;
         }
     }
 }

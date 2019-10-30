@@ -22,6 +22,11 @@
         <ListView x:Name="lbxFiles" Grid.Row="0" AllowDrop="True"
             Drop="lbxFolders_Drop"
             DragEnter="lbxFolders_DragEnter" Margin="7,70,337,70">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <EventSetter Event="PreviewMouseUp" Handler="Row_OnClick"/>
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name"  Width="180">
@@ -31,14 +36,14 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Parameters"  Width="180">
+                    <GridViewColumn Header="Parameters"  Width="480">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Parameters}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Path"  Width="180">
+                    <GridViewColumn Header="Path"  Width="250">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Path}"/>
@@ -50,6 +55,6 @@
         </ListView>
         <Button x:Name="btnAddFiles" Click="btnAddFiles_Click" Margin="0,0,21,8" Content="Add Files" HorizontalAlignment="Right" Width="82" Height="30" VerticalAlignment="Bottom"/>
         <Button x:Name="btnAddFolders" Click="btnAddFolders_Click" Margin="0,0,116,8" Content="Add Folders" HorizontalAlignment="Right" Width="96" Height="30" VerticalAlignment="Bottom"/>
-
+        <TextBlock x:Name="txbDescription" TextWrapping="Wrap" Margin="0,92,42.5,0" Height="410" VerticalAlignment="Top" HorizontalAlignment="Right" Width="261"/>
     </Grid>
 </Window>

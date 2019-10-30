@@ -17,6 +17,18 @@ namespace Wox.Plugin.ScriptsLibrary.Models
 
         [JsonProperty]
         public string Parameters { get; set; }
+
+        /// <summary>
+        /// Contains user added scripts
+        /// </summary>
+        /// <remarks>
+        /// <para>UniqueIdentifier is the path</para>
+        /// </remarks>
+        [JsonProperty]
+        public string UniqueIdentifier { get; set; }
+
+        [JsonProperty]
+        public string Description { get; set; }
     }
 
     public enum ScriptType
