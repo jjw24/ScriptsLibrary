@@ -44,6 +44,8 @@ namespace Wox.Plugin.ScriptsLibrary.Commands
 
             var parameterString = parameters.Replace(Main.ParameterIndicator,"").Trim();
 
+            parameterString = parameterString.Replace("\"", "'");
+
             return parameterString.Replace(Main.ParameterSeperator, ' ');
         }
 

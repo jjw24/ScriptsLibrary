@@ -6,16 +6,17 @@ namespace ScriptsLibrary.Tests
     [TestFixture]
     public class ParameterTests
     {
-        [TestCase("blah.bat -p username;password;computer")]
-        public void WhenGivenQueryStringThenShouldReturnParametersOnly(string queryString)
+        [TestCase("blah.bat -p username;password;computer","username password computer")]
+        [TestCase("blah.bat -p username;"+"\""+"password 123" + "\"", @"username 'password 123'")]        
+        public void WhenGivenQueryStringThenShouldReturnParametersOnly(string queryString, string expectedString)
         {
             var result = Parameter.GetParametersFromQuery(queryString);
-
-            //Assert.True(result.Count == 3);
-            Assert.True(result == "username password computer");
+                        
+            Assert.True(result == expectedString);
         }
 
         [TestCase("blah.bat -p username;", 0)]
+        [TestCase("blah.bat -p username; password;   computer", 3)]
         public void WhenGivenQueryStringWithInsufficientParametersThenShouldReturnExpectedNumber(string queryString, int expectedBoolResult)
         {
             var result = queryString.GetParametersFromQueryCount();
