@@ -22,7 +22,6 @@ namespace Wox.Plugin.ScriptsLibrary
         internal static string Images = "Images";
         internal static MainWindow _mainWindow { get; set; }
 
-        internal static readonly char ParameterSeperator = ';';
         internal static readonly string ParameterIndicator = "-p";
 
         public Main()
