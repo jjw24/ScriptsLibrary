@@ -8,6 +8,7 @@ using Wox.Plugin.ScriptsLibrary.Commands;
 
 using Microsoft.Win32;
 using System.IO;
+using System.Windows.Controls;
 
 namespace Wox.Plugin.ScriptsLibrary.Views
 {
@@ -108,6 +109,22 @@ namespace Wox.Plugin.ScriptsLibrary.Views
             var selectedScript = lbxFiles.SelectedItem as Script;
 
             txbDescription.Text = selectedScript.Description;
+        }
+
+        private void TxbDescription_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (lbxFiles.SelectedItems.Count != 1)
+                return;
+
+            var textBox = sender as TextBox;
+
+            var selectedScript = lbxFiles.SelectedItem as Script;
+
+            txbDescription.Text = textBox?.Text;
+
+            selectedScript.Description = textBox?.Text;
+
+            lbxFiles.Items.Refresh();
         }
     }
 }
