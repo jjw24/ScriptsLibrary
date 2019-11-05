@@ -55,6 +55,6 @@
         </ListView>
         <Button x:Name="btnAddFiles" Click="btnAddFiles_Click" Margin="0,0,21,8" Content="Add Files" HorizontalAlignment="Right" Width="82" Height="30" VerticalAlignment="Bottom"/>
         <Button x:Name="btnAddFolders" Click="btnAddFolders_Click" Margin="0,0,116,8" Content="Add Folders" HorizontalAlignment="Right" Width="96" Height="30" VerticalAlignment="Bottom"/>
-        <TextBox x:Name="txbDescription" LostFocus="TxbDescription_LostFocus" TextWrapping="Wrap" BorderBrush="White" Margin="0,92,42.5,0" Height="410" VerticalAlignment="Top" HorizontalAlignment="Right" Width="261"/>
+        <TextBox x:Name="txbDescription" LostFocus="TxbDescription_LostFocus" AcceptsReturn="True" TextWrapping="Wrap" BorderBrush="White" Margin="0,92,42.5,0" Height="410" VerticalAlignment="Top" HorizontalAlignment="Right" Width="261"/>
     </Grid>
 </Window>
