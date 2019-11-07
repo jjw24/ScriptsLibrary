@@ -21,6 +21,10 @@ namespace Wox.Plugin.ScriptsLibrary.Views
         {
             InitializeComponent();
             lbxFiles.ItemsSource = Main._settings.ScriptList;
+            txbDescription.Visibility = Visibility.Collapsed;
+            txbParameters.Visibility = Visibility.Collapsed;
+            lblParameters.Visibility = Visibility.Collapsed;
+            lblDescription.Visibility = Visibility.Collapsed;
         }
 
         private void btnAddFiles_Click(object sender, RoutedEventArgs e)
@@ -109,6 +113,12 @@ namespace Wox.Plugin.ScriptsLibrary.Views
             var selectedScript = lbxFiles.SelectedItem as Script;
 
             txbDescription.Text = selectedScript.Description;
+            txbParameters.Text = selectedScript.Parameters;
+
+            txbDescription.Visibility = Visibility.Visible;
+            txbParameters.Visibility = Visibility.Visible;
+            lblParameters.Visibility = Visibility.Visible;
+            lblDescription.Visibility = Visibility.Visible;
         }
 
         private void TxbDescription_LostFocus(object sender, RoutedEventArgs e)
@@ -123,6 +133,22 @@ namespace Wox.Plugin.ScriptsLibrary.Views
             txbDescription.Text = textBox?.Text;
 
             selectedScript.Description = textBox?.Text;
+
+            lbxFiles.Items.Refresh();
+        }
+
+        private void TxbParameters_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (lbxFiles.SelectedItems.Count != 1)
+                return;
+
+            var textBox = sender as TextBox;
+
+            var selectedScript = lbxFiles.SelectedItem as Script;
+
+            txbParameters.Text = textBox?.Text;
+
+            selectedScript.Parameters = textBox?.Text;
 
             lbxFiles.Items.Refresh();
         }
