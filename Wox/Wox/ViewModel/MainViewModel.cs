@@ -96,7 +96,7 @@ namespace Wox.ViewModel
         {
             EscCommand = new RelayCommand(_ =>
             {
-                if (!ResultsSelected())
+                if (!SelectedIsFromQueryResults())
                 {
                     SelectedResults = Results;
                 }
@@ -153,17 +153,21 @@ namespace Wox.ViewModel
                         MainWindowVisibility = Visibility.Collapsed;
                     }
 
-                    if (ResultsSelected())
+                    if (SelectedIsFromQueryResults())
                     {
                         _userSelectedRecord.Add(result);
                         _history.Add(result.OriginQuery.RawQuery);
+                    }
+                    else
+                    {
+                        SelectedResults = Results;
                     }
                 }
             });
 
             LoadContextMenuCommand = new RelayCommand(_ =>
             {
-                if (ResultsSelected())
+                if (SelectedIsFromQueryResults())
                 {
                     SelectedResults = ContextMenu;
                 }
@@ -175,7 +179,7 @@ namespace Wox.ViewModel
 
             LoadHistoryCommand = new RelayCommand(_ =>
             {
-                if (ResultsSelected())
+                if (SelectedIsFromQueryResults())
                 {
                     SelectedResults = History;
                     History.SelectedIndex = _history.Items.Count - 1;
@@ -226,7 +230,7 @@ namespace Wox.ViewModel
             set
             {
                 _selectedResults = value;
-                if (ResultsSelected())
+                if (SelectedIsFromQueryResults())
                 {
                     ContextMenu.Visbility = Visibility.Collapsed;
                     History.Visbility = Visibility.Collapsed;
@@ -273,7 +277,7 @@ namespace Wox.ViewModel
 
         public void Query()
         {
-            if (ResultsSelected())
+            if (SelectedIsFromQueryResults())
             {
                 QueryResults();
             }
@@ -305,8 +309,8 @@ namespace Wox.ViewModel
                 {
                     var filtered = results.Where
                     (
-                        r => StringMatcher.IsMatch(r.Title, query) ||
-                             StringMatcher.IsMatch(r.SubTitle, query)
+                        r => StringMatcher.FuzzySearch(query, r.Title).IsSearchPrecisionScoreMet() 
+                            || StringMatcher.FuzzySearch(query, r.SubTitle).IsSearchPrecisionScoreMet()
                     ).ToList();
                     ContextMenu.AddResults(filtered, id);
                 }
@@ -348,8 +352,8 @@ namespace Wox.ViewModel
             {
                 var filtered = results.Where
                 (
-                    r => StringMatcher.IsMatch(r.Title, query) ||
-                         StringMatcher.IsMatch(r.SubTitle, query)
+                    r => StringMatcher.FuzzySearch(query, r.Title).IsSearchPrecisionScoreMet() ||
+                         StringMatcher.FuzzySearch(query, r.SubTitle).IsSearchPrecisionScoreMet()
                 ).ToList();
                 History.AddResults(filtered, id);
             }
@@ -440,7 +444,7 @@ namespace Wox.ViewModel
                     Action = _ =>
                     {
                         _topMostRecord.Remove(result);
-                        App.API.ShowMsg("Succeed");
+                        App.API.ShowMsg("Success");
                         return false;
                     }
                 };
@@ -455,7 +459,7 @@ namespace Wox.ViewModel
                     Action = _ =>
                     {
                         _topMostRecord.AddOrUpdate(result);
-                        App.API.ShowMsg("Succeed");
+                        App.API.ShowMsg("Success");
                         return false;
                     }
                 };
@@ -487,7 +491,7 @@ namespace Wox.ViewModel
             return menu;
         }
 
-        private bool ResultsSelected()
+        private bool SelectedIsFromQueryResults()
         {
             var selected = SelectedResults == Results;
             return selected;

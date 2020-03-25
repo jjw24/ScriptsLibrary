@@ -1,0 +1,12 @@
+{
+  "ID": "0558RT86UY0K4GHH8D59B9B658370558",
+  "ActionKeyword": "script",
+  "Name": "ScriptsLibrary",
+  "Description": "Run scripts",
+  "Author": "JJW24",
+  "Version": "1.0.0",
+  "Language": "csharp",
+  "Website": "https://github.com/jjw24/wox",
+  "ExecuteFileName": "Wox.Plugin.ScriptsLibrary.dll",
+  "IcoPath": "Images\\ScriptsLibrary.png"
+}

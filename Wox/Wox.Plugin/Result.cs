@@ -65,17 +65,13 @@ namespace Wox.Plugin
 
         public override bool Equals(object obj)
         {
-            Result r = obj as Result;
-            if (r != null)
-            {
-                var equality = string.Equals(r.Title, Title) &&
-                               string.Equals(r.SubTitle, SubTitle);
-                return equality;
-            }
-            else
-            {
-                return false;
-            }
+            var r = obj as Result;
+
+            var equality = string.Equals(r?.Title, Title) &&
+                           string.Equals(r?.SubTitle, SubTitle) &&
+                           string.Equals(r?.IcoPath, IcoPath);
+
+            return equality;
         }
 
         public override int GetHashCode()
@@ -114,6 +110,6 @@ namespace Wox.Plugin
         /// <summary>
         /// Plugin ID that generate this result
         /// </summary>
-        public string PluginID { get; set; }
+        public string PluginID { get; internal set; }
     }
 }

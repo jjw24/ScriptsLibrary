@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="Wox.Plugin.ScriptsLibrary.SettingsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Wox.Plugin.ScriptsLibrary"
+             mc:Ignorable="d" Height="300" Width="500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="0*"/>
+        </Grid.ColumnDefinitions>
+        <Label HorizontalAlignment="Center" Margin="80,22,15,0" VerticalAlignment="Top" Height="43" Width="405" FontSize="20" Content="Loaded Scripts"/>
+        <ListView x:Name="lbxFiles" Grid.Row="0" AllowDrop="True"
+            Drop="lbxFolders_Drop"
+            DragEnter="lbxFolders_DragEnter" Margin="7,45,8,70">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name"  Width="180">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding FileName}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Path"  Width="180">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="btnAddFiles" Click="btnAddFiles_Click" Margin="271,246,129,24" Content="Add Files"/>
+        <Button x:Name="btnAddFolders" Click="btnAddFolders_Click" Margin="148,246,252,24" Content="Add Folders"/>
+
+
+    </Grid>
+</UserControl>

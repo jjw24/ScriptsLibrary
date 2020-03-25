@@ -313,8 +313,9 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Languages\es.xaml">
+    <Content Include="Languages\tr.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Page Include="MainWindow.xaml">
@@ -381,7 +382,7 @@
     <Page Include="Themes\BlackAndWhite.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Themes\BlurBlack.xaml">
       <Generator>MSBuild:Compile</Generator>
